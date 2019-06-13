@@ -16,19 +16,14 @@ import pdb
 import h5py
 #from tf.keras.callbacks import TensorBoard, ModelCheckpoint
 import time
-import json
-from tensorflow.keras.regularizers import l1, l2
-
 
 parser = argparse.ArgumentParser() 
 
 parser.add_argument('--train', action = 'store_true', help = "train the model")
 parser.add_argument('--test',  action = 'store_true', help = "test the model")
-parser.add_argument('--save_path', default ='training_checkpoints/',type = str, help = "path of save model")
+parser.add_argument('--save_path', default ='multi_checkpoints/',type = str, help = "path of save model")
 parser.add_argument('--epoch', default = 2000 ,type = int, help = 'number of epcohs to train')
 parser.add_argument('--rnn', default = 10 ,type = int, help = 'number rnn units')
-parser.add_argument('--len', default = 193 ,type = int, help = 'length of sequence')
-parser.add_argument('--drop', default = 0.1 ,type = float, help = 'dropout rate')
 parser.add_argument('--dense',type = int, help = 'dim of dense layer')
 #parser.add_argument('--dense', default = 100 ,type = int, help = 'dim of dense layer')
 
@@ -73,7 +68,7 @@ last = np.array(time_list*61).reshape(-1, 1)
 #pdb.set_trace()
 #toy = np.concatenate([a,b,c], axis = -1) 
 #toy = np.concatenate([a, b,c,last], axis = -1) 
-toy = traffic
+#toy = traffic
 #toy = traffic[:, :100]
 #toy = traffic[:, :150]
 #toy = traffic[:, 200:300]
@@ -86,10 +81,10 @@ toy = traffic
 #toy = traffic[:, 900:1000]
 #toy = traffic[:, 1000:1100]
 #toy = traffic[:, 1100:1200]
-#toy = traffic[:, 1200:]
+toy = traffic[:, 1200:]
 #toy = traffic[:, 443: 443*2]
 #toy = traffic[:, :443]
-toy = np.concatenate([toy, last], axis = -1)
+#toy = np.concatenate([traffic, last], axis = -1)
 #sin wave
 #a= sin_wave(amp = 0.5, w=1, y = 0.5 )
 #b= sin_wave(amp = 0.25, w=1, y = 0.5 )
@@ -131,11 +126,11 @@ toy_val = toy[int (len(toy) * 0.8):].round(3).astype('float32')
 
 
 # The maximum length sentence we want for a single input in characters
-seq_length_toy = args.len
+seq_length_toy = 193
 examples_per_epoch_toy = len(toy_train)//seq_length_toy
 examples_per_epoch_toy_val = len(toy_val)//seq_length_toy
 
-seq_length_toy_val = args.len 
+seq_length_toy_val = 193
 
 # Create training examples / targets
 char_dataset_toy = tf.data.Dataset.from_tensor_slices(toy_train)
@@ -196,7 +191,7 @@ embedding_dim_toy = 10
 rnn_units_toy = args.rnn 
 
 rnn1 = tf.keras.layers.CuDNNGRU
-#rnn2 = tf.keras.layers.CuDNNLSTM
+rnn2 = tf.keras.layers.CuDNNLSTM
 #rnn = tf.keras.layers.RNN
 
 def build_model_toy(feature_size, embedding_dim, rnn_units, batch_size, state= False):
@@ -204,22 +199,17 @@ def build_model_toy(feature_size, embedding_dim, rnn_units, batch_size, state= F
 	#	 tf.keras.layers.Embedding(vocab_size, embedding_dim,
 	#							   batch_input_shape=[batch_size, None]),
 	
-	tf.keras.layers.Dense(args.dense, activation = None),
-	tf.keras.layers.Dropout(args.drop),
-
+	#tf.keras.layers.Dense(args.dense, activation = None),
+	#tf.keras.layers.Dropout(0.1),
 	rnn1(rnn_units,
 	return_sequences=True,
 	recurrent_initializer='glorot_uniform',
 	#stateful= state),
-	stateful= state, batch_input_shape = [batch_size, None, feature_size], activity_regularizer=l1(0.01)),
-	#tf.keras.layers.Dropout(args.drop),
-
-	tf.keras.layers.Dense(args.dense, activation = None, activity_regularizer=l1(0.01)),
-	#tf.keras.layers.Dropout(args.drop),
-
-	tf.keras.layers.Dense(args.dense, activation = None, activity_regularizer=l1(0.01)),
-	#tf.keras.layers.Dropout(args.drop),
-
+	stateful= state, batch_input_shape = [batch_size, None, feature_size]),
+	tf.keras.layers.Dropout(0.1),
+	#tf.keras.layers.Dense(250, activation = 'relu'),
+	tf.keras.layers.Dense(250, activation = None),
+	#tf.keras.layers.Dropout(0.1),
 	tf.keras.layers.Dense(feature_size, activation = 'sigmoid')
 	])
 
@@ -269,7 +259,7 @@ def plot_test(input_test, target, prediction):
 	fig, ax = plt.subplots(figsize = (20,8))
 	
 	#for feature_idx in range(features):
-	features = [1329]
+	features = [9, 99, 80]
 	for feature_idx in features:
 
 		plt.plot(steps[:], target[:,:,feature_idx].ravel(), label = 'target_{}'.format(feature_idx), color = '#1f77b4')
@@ -294,7 +284,7 @@ if args.train:
 	filepath= args.save_path + args.model_name,
 	save_weights_only=True,
 	monitor = 'val_loss',
-	save_best_only = False 
+	save_best_only = True 
 	)
 
 	tensorboard = tf.keras.callbacks.TensorBoard(log_dir="logs/{}".format(args.model_name))
@@ -308,9 +298,6 @@ if args.train:
 
 	print ('\n train: {}, validation: {}'.format(min_train_loss, min_train_val_loss)) 
 	#print ('\n train: {}'.format(min_train_loss)) 
-	
-	fp = json.dumps({'min_train_loss': min_train_loss, 'min_train_val_loss': min_train_val_loss})
-	open('json_out/' + args.model_name + '.json','w').write(fp)
 
 
 if args.test:
