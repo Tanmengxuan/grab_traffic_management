@@ -4,7 +4,7 @@ import tensorflow as tf
 
 config = tf.ConfigProto()
 config.gpu_options.per_process_gpu_memory_fraction = 0.3
-#tf.enable_eager_execution(config = config)
+##tf.enable_eager_execution(config = config)
 
 import numpy as np
 import pandas as pd
@@ -89,7 +89,7 @@ toy = traffic
 #toy = traffic[:, 1200:]
 #toy = traffic[:, 443: 443*2]
 #toy = traffic[:, :443]
-toy = np.concatenate([toy, last], axis = -1)
+#toy = np.concatenate([toy, last], axis = -1)
 #sin wave
 #a= sin_wave(amp = 0.5, w=1, y = 0.5 )
 #b= sin_wave(amp = 0.25, w=1, y = 0.5 )
@@ -211,13 +211,14 @@ def build_model_toy(feature_size, embedding_dim, rnn_units, batch_size, state= F
 	return_sequences=True,
 	recurrent_initializer='glorot_uniform',
 	#stateful= state),
-	stateful= state, batch_input_shape = [batch_size, None, feature_size], activity_regularizer=l1(0.01)),
+	stateful= state ),
+	#stateful= state, batch_input_shape = [batch_size, None, feature_size]),
+	tf.keras.layers.Dropout(args.drop),
+
+	tf.keras.layers.Dense(250, activation = None),
 	#tf.keras.layers.Dropout(args.drop),
 
-	tf.keras.layers.Dense(args.dense, activation = None, activity_regularizer=l1(0.01)),
-	#tf.keras.layers.Dropout(args.drop),
-
-	tf.keras.layers.Dense(args.dense, activation = None, activity_regularizer=l1(0.01)),
+	#tf.keras.layers.Dense(args.dense, activation = None),
 	#tf.keras.layers.Dropout(args.drop),
 
 	tf.keras.layers.Dense(feature_size, activation = 'sigmoid')
@@ -240,6 +241,8 @@ feature_size,
 embedding_dim=embedding_dim_toy,
 rnn_units=rnn_units_toy,
 batch_size=BATCH_SIZE_toy)
+
+#pdb.set_trace()
 
 def loss_toy(y_true, y_pred):
 	#return tf.math.sqrt(tf.keras.losses.mse(y_true, y_pred))
@@ -294,7 +297,7 @@ if args.train:
 	filepath= args.save_path + args.model_name,
 	save_weights_only=True,
 	monitor = 'val_loss',
-	save_best_only = False 
+	save_best_only = True 
 	)
 
 	tensorboard = tf.keras.callbacks.TensorBoard(log_dir="logs/{}".format(args.model_name))
@@ -303,6 +306,7 @@ if args.train:
 	history_toy = model_toy.fit(dataset_toy, epochs= args.epoch, steps_per_epoch=steps_per_epoch_toy, validation_data = dataset_toy_val, validation_steps = steps_per_epoch_toy_val,  callbacks=[checkpoint_callback, tensorboard])
 	#history_toy = model_toy.fit(dataset_toy, epochs=EPOCHS, steps_per_epoch=steps_per_epoch_toy, callbacks=[checkpoint_callback, tensorboard])
 
+	#pdb.set_trace()
 	min_train_loss = min(history_toy.history['loss'])
 	min_train_val_loss = min(history_toy.history['val_loss'])
 
@@ -320,9 +324,10 @@ if args.test:
 	model_toy = build_model_toy(feature_size, embedding_dim_toy, rnn_units_toy, batch_size=1, state = True)
 	model_toy.load_weights(args.save_path + args.model_name)
 	model_toy.build(tf.TensorShape([1, None, feature_size]))
-
+	
 	#test_sample = np.array([[
 	#[0.220], [0.221], [0.222], [0.223], [0.224],[0.225],[0.226],[0.227] ]]).astype('float32')
+	#pdb.set_trace()
 
 	#test_sample = np.array([[
 	#[0.121], [0.122], [0.123], [0.124], [0.125],[0.126],[0.127],[0.128],[0.129] ]]).astype('float32')
@@ -337,7 +342,7 @@ if args.test:
 	if args.test_file:
 
 		#input_len = args.test_file
-		input_lens = [24, 48, 96, 164, 192]
+		input_lens = [24, 48, 96, 164, 192 ]
 		#input_lens = [96, 192]
 		num_samples = []
 
