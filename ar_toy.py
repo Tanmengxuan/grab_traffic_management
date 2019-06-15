@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import tensorflow as tf
 
 config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.3
+config.gpu_options.per_process_gpu_memory_fraction = 0.1
 ##tf.enable_eager_execution(config = config)
 
 import numpy as np
@@ -73,7 +73,7 @@ last = np.array(time_list*61).reshape(-1, 1)
 #pdb.set_trace()
 #toy = np.concatenate([a,b,c], axis = -1) 
 #toy = np.concatenate([a, b,c,last], axis = -1) 
-toy = traffic
+#toy = traffic
 #toy = traffic[:, :100]
 #toy = traffic[:, :150]
 #toy = traffic[:, 200:300]
@@ -86,7 +86,7 @@ toy = traffic
 #toy = traffic[:, 900:1000]
 #toy = traffic[:, 1000:1100]
 #toy = traffic[:, 1100:1200]
-#toy = traffic[:, 1200:]
+toy = traffic[:, 1200:]
 #toy = traffic[:, 443: 443*2]
 #toy = traffic[:, :443]
 #toy = np.concatenate([toy, last], axis = -1)
@@ -204,15 +204,15 @@ def build_model_toy(feature_size, embedding_dim, rnn_units, batch_size, state= F
 	#	 tf.keras.layers.Embedding(vocab_size, embedding_dim,
 	#							   batch_input_shape=[batch_size, None]),
 	
-	tf.keras.layers.Dense(args.dense, activation = None),
-	tf.keras.layers.Dropout(args.drop),
+	#tf.keras.layers.Dense(args.dense, activation = None),
+	#tf.keras.layers.Dropout(args.drop),
 
 	rnn1(rnn_units,
 	return_sequences=True,
 	recurrent_initializer='glorot_uniform',
-	#stateful= state),
+	#batch_input_shape = [batch_size, None, feature_size],
 	stateful= state ),
-	#stateful= state, batch_input_shape = [batch_size, None, feature_size]),
+	
 	tf.keras.layers.Dropout(args.drop),
 
 	tf.keras.layers.Dense(250, activation = None),
@@ -323,6 +323,7 @@ if args.test:
 
 	model_toy = build_model_toy(feature_size, embedding_dim_toy, rnn_units_toy, batch_size=1, state = True)
 	model_toy.load_weights(args.save_path + args.model_name)
+	#pdb.set_trace()
 	model_toy.build(tf.TensorShape([1, None, feature_size]))
 	
 	#test_sample = np.array([[

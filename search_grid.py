@@ -84,27 +84,56 @@ import os
 #os.system('ipython ar_toy.py -- --train --model_name ar_grab95 --rnn 1500 --len 193 --dense 1500 --drop 0.1 --epoch 200')
 #print ('done')
 
-print ('\n running ar_grab96')
-os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab96 --rnn 300 --len 193 --dense 250 --drop 0.1 --epoch 250')
+#print ('\n running ar_grab96')
+#os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab96 --rnn 300 --len 193 --dense 250 --drop 0.1 --epoch 250')
+#print ('done')
+#
+#print ('\n running ar_grab97')
+#os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab97 --rnn 300 --len 193 --dense 250 --drop 0.1 --epoch 250')
+#print ('done')
+#
+#print ('\n running ar_grab98')
+#os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab98 --rnn 300 --len 193 --dense 300 --drop 0.1 --epoch 250')
+#print ('done')
+#
+#print ('\n running ar_grab99')
+#os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab99 --rnn 300 --len 193 --dense 300 --drop 0.1 --epoch 250')
+#print ('done')
+#
+#print ('\n running ar_grab100')
+#os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab100 --rnn 400 --len 193 --dense 300 --drop 0.2 --epoch 250')
+#print ('done')
+#
+#print ('\n running ar_grab101')
+#os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab101 --rnn 400 --len 193 --dense 300 --drop 0.2 --epoch 250')
+#print ('done')
+
+
+print ('\n running ar_grab104')
+os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab104 --rnn 100 --len 193 --dense 100 --drop 0.1 --epoch 300 --file_path train_processed_13c.h5 --json_path geohash_13c.json')
 print ('done')
 
-print ('\n running ar_grab97')
-os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab97 --rnn 300 --len 193 --dense 250 --drop 0.1 --epoch 250')
+
+print ('\n running ar_grab105')
+os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab105 --rnn 50 --len 193 --dense 50 --drop 0.1 --epoch 300 --file_path train_processed_13c.h5 --json_path geohash_13c.json')
 print ('done')
 
-print ('\n running ar_grab98')
-os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab98 --rnn 300 --len 193 --dense 300 --drop 0.1 --epoch 250')
+
+print ('\n running ar_grab106')
+os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab106 --rnn 150 --len 193 --dense 150 --drop 0.1 --epoch 300 --file_path train_processed_8c.h5 --json_path geohash_8c.json')
 print ('done')
 
-print ('\n running ar_grab99')
-os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab99 --rnn 300 --len 193 --dense 300 --drop 0.1 --epoch 250')
+
+print ('\n running ar_grab107')
+os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab107 --rnn 80 --len 193 --dense 80 --drop 0.1 --epoch 300 --file_path train_processed_8c.h5 --json_path geohash_8c.json')
 print ('done')
 
-print ('\n running ar_grab100')
-os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab100 --rnn 400 --len 193 --dense 300 --drop 0.2 --epoch 250')
+
+print ('\n running ar_grab108')
+os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab108 --rnn 130 --len 193 --dense 130 --drop 0.1 --epoch 300 --file_path train_processed_10c.h5 --json_path geohash_10c.json')
 print ('done')
 
-print ('\n running ar_grab101')
-os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab101 --rnn 400 --len 193 --dense 300 --drop 0.2 --epoch 250')
-print ('done')
 
+print ('\n running ar_grab109')
+os.system('ipython ar_toy_multi.py -- --train --model_name ar_grab109 --rnn 60 --len 193 --dense 60 --drop 0.1 --epoch 300 --file_path train_processed_10c.h5 --json_path geohash_10c.json')
+print ('done')

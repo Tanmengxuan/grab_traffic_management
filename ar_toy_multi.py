@@ -16,6 +16,7 @@ import pdb
 import h5py
 #from tf.keras.callbacks import TensorBoard, ModelCheckpoint
 import time
+import json
 
 parser = argparse.ArgumentParser() 
 
@@ -27,7 +28,9 @@ parser.add_argument('--rnn', default = 10 ,type = int, help = 'number rnn units'
 parser.add_argument('--dense',type = int, help = 'dim of dense layer')
 parser.add_argument('--len', default = 193 ,type = int, help = 'length of sequence')
 parser.add_argument('--drop', default = 0.1 ,type = float, help = 'dropout rate')
-#parser.add_argument('--dense', default = 100 ,type = int, help = 'dim of dense layer')
+
+parser.add_argument('--file_path' ,type = str, help = 'file path')
+parser.add_argument('--json_path' ,type = str, help = 'path of feature idx')
 
 
 parser.add_argument('--model_name', default ='ar_toy',type = str, help = 'name of model')
@@ -59,7 +62,8 @@ def norm(data):
 
 	return normed_data, min_data, range_data
 
-hf = h5py.File('train_processed.h5', 'r')
+#hf = h5py.File('train_processed.h5', 'r')
+hf = h5py.File( args.file_path, 'r')
 traffic = hf.get('data')[:]
 #a =  traffic[:, 1299].reshape(-1, 1)
 #b =  traffic[:, 1200].reshape(-1, 1)
@@ -70,7 +74,7 @@ traffic = hf.get('data')[:]
 #pdb.set_trace()
 #toy = np.concatenate([a,b,c], axis = -1) 
 #toy = np.concatenate([a, b,c,last], axis = -1) 
-#toy = traffic
+toy = traffic
 #toy = traffic[:, :100]
 #toy = traffic[:, :150]
 #toy = traffic[:, 200:300]
@@ -144,14 +148,23 @@ traffic = hf.get('data')[:]
 #wave = np.concatenate([wave_1, wave_2,wave_3,wave_4,wave_5,wave_6], axis = -1)
 
 
-toy = traffic 
 toy_train = toy[:int (len(toy) * 0.8)].round(3).astype('float32')
 toy_val = toy[int (len(toy) * 0.8):].round(3).astype('float32')
 
 
-features_index = [(0 , 100), (100, 200), (200, 300), (300, 400), 
-(400, 500), (500, 600), (600, 700), (700, 800), (800, 900), (900, 1000),
-(1000, 1100), (1100, 1200), (1200, 1329)]
+#features_index = [(0 , 100), (100, 200), (200, 300), (300, 400), 
+#(400, 500), (500, 600), (600, 700), (700, 800), (800, 900), (900, 1000),
+#(1000, 1100), (1100, 1200), (1200, 1329)]
+
+
+#features_index = [(0 , 1329)]
+
+#features_index = [(0, 362), (362, 884), (884, 1329)] 
+#features_index =[(0, 270), (270, 575), (575, 834), (834, 1075), (1075, 1329)] 
+
+
+features_index = json.loads((open(args.json_path,'r')).read())['feature_idx']
+
 
 
 seq_length_toy = args.len 
@@ -259,16 +272,19 @@ class RNN(object):
 
 		model_input = tf.keras.layers.Input(batch_shape = (self.batch_size, None, self.feature_size))
 
-		#dense0 = tf.keras.layers.Dense(self.dense, activation = None)(model_input)
-		#dense0 = tf.keras.layers.Dropout(self.drop)(dense0)
+		dense0 = tf.keras.layers.Dense(self.dense, activation = None)(model_input)
+		dense0 = tf.keras.layers.Dropout(self.drop)(dense0)
 		
 		rnn =  tf.keras.layers.CuDNNGRU( self.units,
 			return_sequences=True,
 			recurrent_initializer='glorot_uniform',
-			stateful= self.state)(model_input)
+			#batch_input_shape = [self.batch_size, None, self.feature_size],
+			stateful= self.state)(dense0)
+
 		rnn = tf.keras.layers.Dropout(self.drop)(rnn)
 
 		dense1 = tf.keras.layers.Dense(self.dense, activation = None)(rnn)
+		#dense1 = tf.keras.layers.Dense(250, activation = None)(rnn)
 
 		model_output =  tf.keras.layers.Dense(self.feature_size, activation = 'sigmoid')(dense1)
 
@@ -290,6 +306,8 @@ def combine_rnn(rnn_units, dense_size, drop_rate, batch_size, state = False):
 		output_list.append(model_output)
 		
 	final_out = tf.keras.layers.concatenate(output_list, axis = -1)
+	#final_out = tf.keras.layers.Dense(1329, activation = 'sigmoid')(final_out)
+	#final_out = output_list[0]
 	model = tf.keras.models.Model(inputs = input_list , outputs = final_out)
 	
 	return model
@@ -306,11 +324,15 @@ if args.train:
 
 	model = combine_rnn(args.rnn, args.dense, args.drop, BATCH_SIZE_toy)
 
+	#model = tf.keras.models.load_model(args.save_path + 'ar_grab102')
+
 	model.compile(
 	optimizer = tf.train.AdamOptimizer(),
 	loss = loss_toy)
-
+	
+	
 	tf.keras.utils.plot_model(model)
+	print (model.summary())
 
 	tf.keras.backend.set_session(tf.Session(config=config))
 
