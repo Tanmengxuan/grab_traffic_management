@@ -4,9 +4,10 @@ An attempt to tackle the Traffic Management problem as part of the [Grab AI for 
 
 **Content**
 
-1. Model description
-2. Data analysis and feature engineering
-3. Guide to running the code
-4. System specification
+1. Model description - A description of the architecture of the model
+2. Data analysis and feature engineering - How the raw data is being processed to train and evaluate the model 
+3. Guide to running the code - A step-by-step guide to running the code
+4. System specification - Software packages requirement
+
 
 

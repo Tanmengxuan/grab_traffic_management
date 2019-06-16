@@ -52,7 +52,12 @@ class Process(object):
 		# append values to nested list
 		for idx in range(len(self.raw_data)):
 			row_idx = self.daytime_dict[ self.daytime_array[idx] ]
-			col_idx = self.geohash_dict[ self.geohash_array[idx] ]
+
+			if self.geohash_array[idx] not in self.geohash_dict:
+				print ('location {} was not present in training data'.format(self.geohash_array[idx]))
+				continue
+			else:
+				col_idx = self.geohash_dict[ self.geohash_array[idx] ]
 			
 			data_nested_list[row_idx][col_idx] = self.demand_array[idx]
 
@@ -63,7 +68,7 @@ class Process(object):
 if __name__ == '__main__':
 
 	raw_data = pd.read_csv(args.input_raw, sep = ',')
-	fp = json.loads((open('geohash_3c.json','r')).read())
+	fp = json.loads((open('geohash_8c.json','r')).read())
 	geohash_dict = fp['coord_dict']
 
 	processed_data_array = Process(raw_data, geohash_dict).get_processed_data()
