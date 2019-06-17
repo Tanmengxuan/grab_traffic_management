@@ -33,7 +33,7 @@ algorithm makes use of relative distance between locations to form different clu
 
 --image of cluster--
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/2_Data_Analysis/images/clusters.png" alt="location clusters" width="500px" height="500px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/clusters.png" alt="location clusters" width="500px" height="500px" style="display: block;">
 </div>
 
 <div>
