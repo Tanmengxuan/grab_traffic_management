@@ -38,6 +38,9 @@ In short, 8 different clusters of locations have been identified and a total of 
 The 8 ARNN models are being trained simultaneously and the outputs from all 8 models are being merged at the final layer and subsequently backpropagated using the root mean square loss function. 
 Therefore, the final model is still able to predict the travel demands at all 1329 locations at the same time. 
 
+The multiple ARNN structure is also the **final architecture** of the model that will be used for training and evalutation for this challenge.
+The detailed structure of this model visualized using Keras can be found [here](link).
+
 ## Some results
 
 Although the task only requires the model to predict demands up to T+5 time intervals, the ARNN model can 

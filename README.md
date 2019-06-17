@@ -2,6 +2,9 @@
 
 An attempt to tackle the Traffic Management problem as part of the [Grab AI for S.E.A. challenge](https://www.aiforsea.com/traffic-management).
 
+Thank you for visiting this repo. Any feedback is appreciated! 
+
+
 **Content**
 
 1. [Model description](https://github.com/Tanmengxuan/grab_traffic_management/tree/master/1_Model_Description)- A description of the architecture of the model
@@ -10,4 +13,25 @@ An attempt to tackle the Traffic Management problem as part of the [Grab AI for 
 4. System specification - Software packages requirement
 
 
+## Brief overview of proposed solution
 
+We proposed to use a Recurrent Neural Network (RNN) with autoregressive property to model the travel 
+demand patterns of users at different locations across time.
+
+<div>
+<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/arnn.png" alt="arnn" width="550px" height="300px" style="display: block;">
+</div>
+
+
+The model makes use of history demand information to predict future demand at every timestep.
+
+
+The model is able to predict the future demand of any time length given a sequence of input of arbitrary length T.  
+
+<div>
+<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/locations_1.png" alt="one" width="600px" height="300px" style="display: block;">
+</div>
+
+
+The plot displays that model's ability to capture the demand pattern of users at location 'qp09eq' 100 time intervals ahead
+when given a input sequence of length 300.
