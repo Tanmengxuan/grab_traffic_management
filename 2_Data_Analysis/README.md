@@ -23,7 +23,7 @@ the second row contains demands from the same 1329 locations at day 1 time 0:15 
 
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/row_order.png" alt="row order" width="500px" height="450px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/row_order.png" alt="row order" width="550px" height="450px" style="display: block;">
 </div>
 
 

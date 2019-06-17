@@ -29,9 +29,11 @@ How do we identify the clusters given the geohash information is explained in th
 
 In short, 8 different clusters of locations have been identified and a total of 8 ARNN models are used to model the travel patterns at their corresponding clusters. Each ARNN will be tasked to learn the travel patterns of locations which belong to a certain cluster. 
 
+
 <div>
 <img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/arnn_multiple.png" alt="arnn_multiple" width="550px" height="350px" style="display: block;">
 </div>
+
 
 The 8 ARNN models are being trained simultaneously and the outputs from all 8 models are being merged at the final layer and subsequently backpropagated using the root mean square loss function. 
 Therefore, the final model is still able to predict the travel demands at all 1329 locations at the same time. 
@@ -41,15 +43,19 @@ Therefore, the final model is still able to predict the travel demands at all 13
 Although the task only requires the model to predict demands up to T+5 time intervals, the ARNN model can 
 predict up to any number of time intervals ahead given input sequence of any length T.  
 
+
 <div>
 <img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/locations_1.png" alt="one" width="600px" height="300px" style="display: block;">
 </div>
 
+
 The model is able to capture the demand pattern of a particular location 100 time intervals ahead given an input sequence length of 300 time intervals. 
+
 
 <div>
 <img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/locations_2.png" alt="two" width="600px" height="300px" style="display: block;">
 </div>
+
 
 It is also able to capture demand patterns at multiple locations simultaneously.
 
