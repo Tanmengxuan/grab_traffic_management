@@ -19,14 +19,25 @@ def plot_test(input_test, target, prediction, model_name):
 	fig, ax = plt.subplots(figsize = (20,8))
 
 	#for feature_idx in range(features):
-	features = [199, 200]
-	for feature_idx in features:
+	#features = [199, 200]
+	features = [ 200, 199]
+	target_labels = [ 'target_qp09eq','target_qp09ep']
+	prediction_labels = ['predcition_qp09eq', 'predcition_qp09ep']
+	for feature_idx in range(len(features)):
 
-		plt.plot(steps[:], target[:,:,feature_idx].ravel(), label = 'target_{}'.format(feature_idx), color = '#1f77b4')
-		plt.plot(steps[start_pred:], prediction[:,:,feature_idx].ravel(), label = 'prediciton_{}'.format(feature_idx), linestyle='dashed', color = '#ff7f0e')
+		#plt.plot(steps[:], target[:,:,feature_idx].ravel(), label = 'target_qp09eq'.format(feature_idx), color = '#1f77b4')
+		#plt.plot(steps[start_pred:], prediction[:,:,feature_idx].ravel(), label = 'prediciton_qp09eq'.format(feature_idx), linestyle='dashed', color = '#ff7f0e')
 		
-	ax.legend()
-	plt.title(model_name)
+		plt.plot(steps[:], target[:,:,features[feature_idx]].ravel(), label = target_labels[feature_idx])
+		plt.plot(steps[start_pred:], prediction[:,:,features[feature_idx]].ravel(), label = prediction_labels[feature_idx], linestyle='dashed')
 
-	fig.savefig('plot_test_sample/' + model_name + '.png')
+	ax.legend()
+	plt.xlabel('Time intervals index', fontsize = 15)
+	plt.ylabel('Demand', fontsize = 15)
+	#plt.title(model_name)
+	
+	#plt.show()
+	save_path = 'plot_test_sample/' + model_name + '.png'
+	fig.savefig(save_path)
+	print ('\n fig saved in {}'.format(save_path))
 
