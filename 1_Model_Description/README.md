@@ -5,7 +5,7 @@
 The task requires the model to predict as accurate as possible the travel demand at all 
 locations (1329 in total) up T+5 time intervals given a sequence of demand data for all locations of arbitrary length T.
 
-This is similar to a language generation problem where the objective is to model the conditional probability of generating new words when given a sequence of length T words as input. The only difference is that 
+This is similar to a [language generation problem](https://www.tensorflow.org/tutorials/sequences/text_generation) where the objective is to model the conditional probability of generating new words when given a sequence of length T words as input. The only difference is that 
 the travel demand generation model directly predicts the demand at the next time interval while the language generation model has to sample from a probability distribution to decide on the next probable target.
 
 Therefore an Autoregressive Recurrent Neural Network (ARNN) may be used to model the travel demand problem whose aim is to model the future travel pattern given the history tavel demands of users. 

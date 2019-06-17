@@ -9,8 +9,7 @@ Thank you for visiting this repo. Any feedback is appreciated!
 
 1. [Model description](https://github.com/Tanmengxuan/grab_traffic_management/tree/master/1_Model_Description)- A description of the architecture of the model
 2. [Data analysis and feature engineering](https://github.com/Tanmengxuan/grab_traffic_management/tree/master/2_Data_Analysis) - How the raw data is being processed to train and evaluate the model 
-3. [Guide to running the code](https://github.com/Tanmengxuan/grab_traffic_management/tree/master/3_Main)- A step-by-step guide to running the code
-4. System specification - Software packages requirement
+3. [Guide to running the code](https://github.com/Tanmengxuan/grab_traffic_management/tree/master/3_Main)- A step-by-step guide to running the code and software packages requirement
 
 
 ## Brief overview of proposed solution
@@ -35,3 +34,5 @@ The model is able to predict the future demand of any time length given a sequen
 
 The plot displays that model's ability to capture the demand pattern of users at location 'qp09eq' 100 time intervals ahead
 when given a input sequence of length 300.
+
+More details can be found in [1_Model_Description](https://github.com/Tanmengxuan/grab_traffic_management/tree/master/1_Model_Description) and [2_Data_Analysis](https://github.com/Tanmengxuan/grab_traffic_management/tree/master/2_Data_Analysis).
