@@ -33,7 +33,7 @@ algorithm makes use of relative distance between locations to form different clu
 
 --image of cluster--
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/blob/master/2_Data_Analysis/images/clusters.png" alt="location clusters" width="500px" height="500px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/2_Data_Analysis/images/clusters.png" alt="location clusters" width="500px" height="500px" style="display: block;">
 </div>
 
 <div>
@@ -54,7 +54,7 @@ different ARNN models to capture patterns in different clusters may help in the 
 
 --image--
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/blob/master/2_Data_Analysis/images/pattern_clusters.png" alt="clusters demands" width="600px" height="whatever" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/2_Data_Analysis/images/pattern_clusters.png" alt="clusters demands" width="600px" height="whatever" style="display: block;">
 </div>
 
 We randomly picked 2 locations from 4 different clusters for display.
