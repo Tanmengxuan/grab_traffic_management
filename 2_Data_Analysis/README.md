@@ -21,9 +21,11 @@ The rows in the prepocessed data is arranged in increasing time order.
 For instance the first row contains demands from all 1329 locations at day 1 time 0:0 (1,0:0),
 the second row contains demands from the same 1329 locations at day 1 time 0:15 (1,0:15), and so on.
 
+
 <div>
 <img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/row_order.png" alt="row order" width="500px" height="450px" style="display: block;">
 </div>
+
 
 Since the training data contains 61 days of the data at 15 minutes intervals, the total number of rows in
 the prepocessed training data is 5856. The final shape of the prepocessed training data is (5856, 1329). 
@@ -33,15 +35,19 @@ the prepocessed training data is 5856. The final shape of the prepocessed traini
 We first decode all unique geohashes into their respective latitude and longitude values. Then, possible clusters in the spread of locations are identified using the KMeans clustering algorithm. 
 The algorithm makes use of relative distance between locations to form different clusters.
 
+
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/clusters.png" alt="location clusters" width="500px" height="450px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/clusters.png" alt="location clusters" width="550px" height="400px" style="display: block;">
 </div>
+
 
 8 clusters have been identified. Next, the columns of the preprocessed data are being arranged such that locations that have the same cluster label are grouped together.
 
+
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/col_order.png" alt="col order" width="500px" height="450px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/col_order.png" alt="col order" width="550px" height="400px" style="display: block;">
 </div>
+
 
 The arrangement of the columns in the preprocessed data has been saved and will be used for training 
 and evaluation of the multiple ARNN model where each ARNN will be assigned to model travel demands in different clusters.
@@ -51,8 +57,10 @@ and evaluation of the multiple ARNN model where each ARNN will be assigned to mo
 The travel demand patterns of locations are generally different across different clusters. Hence, using 
 different ARNN models to capture patterns in different clusters may help in the forecasting accuracy.
 
+
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/pattern_clusters.png" alt="clusters demands" width="600px" height="400px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/pattern_clusters.png" alt="clusters demands" width="650px" height="450px" style="display: block;">
 </div>
+
 
 We randomly picked 2 locations from 4 different clusters for display.
