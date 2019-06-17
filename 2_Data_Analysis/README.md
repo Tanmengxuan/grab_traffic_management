@@ -32,6 +32,10 @@ We first identify possible clusters in the spread of locations using the Kmeans 
 algorithm makes use of relative distance between locations to form different clusters.
 
 --image of cluster--
+<div>
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/blob/master/2_Data_Analysis/images/clusters.png" alt="location clusters" width="500px" height="500px" style="display: block;">
+</div>
+
 
 8 clusters have been identified. Next, the columns of the preprocessed data are being arranged such that locations that have the same cluster label are grouped together.
 
@@ -46,5 +50,8 @@ The travel demand patterns of locations are generally different across different
 different ARNN models to capture patterns in different clusters may help in the forecasting accuracy.
 
 --image--
+<div>
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/blob/master/2_Data_Analysis/images/pattern_clusters.png" alt="clusters demands" width="600px" height="whatever" style="display: block;">
+</div>
 
 We randomly picked 2 locations from 4 different clusters for display.
