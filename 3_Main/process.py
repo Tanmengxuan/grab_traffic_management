@@ -74,7 +74,7 @@ if __name__ == '__main__':
 	processed_data_array = Process(raw_data, geohash_dict).get_processed_data()
 
 	# save data array to file
-	hf = h5py.File( 'processed_data/test_processed.h5', 'w')
+	hf = h5py.File( '../processed_data/test_processed.h5', 'w')
 	hf.create_dataset('data', data =  processed_data_array)
 	hf.close()
 

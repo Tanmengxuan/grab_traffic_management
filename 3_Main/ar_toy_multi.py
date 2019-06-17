@@ -25,18 +25,18 @@ parser.add_argument('--test_file', action = 'store_true',  help = 'test the enti
 parser.add_argument('--plot_sample',  action = 'store_true', help = "plot predicted sample")
 
 #Training and test parameters
-parser.add_argument('--epoch', default = 2000 ,type = int, help = 'number of epcohs to train')
-parser.add_argument('--batch_size', default = 64 ,type = int, help = 'mini batch size')
-parser.add_argument('--rnn', default = 10 ,type = int, help = 'number rnn units')
-parser.add_argument('--dense',type = int, help = 'dim of dense layer')
+parser.add_argument('--epoch', default = 50, type = int, help = 'number of epcohs to train')
+parser.add_argument('--batch_size', default = 64, type = int, help = 'mini batch size')
+parser.add_argument('--rnn', default = 150, type = int, help = 'number rnn units')
+parser.add_argument('--dense',default = 150, type = int, help = 'dim of dense layer')
 parser.add_argument('--len', default = 193 ,type = int, help = 'length of sequence')
 parser.add_argument('--drop', default = 0.1 ,type = float, help = 'dropout rate')
 
 #Input and output
 parser.add_argument('--model_name', default ='ar_toy',type = str, help = 'name of model to save')
 parser.add_argument('--save_path', default ='multi_checkpoints/',type = str, help = "path of save model")
-parser.add_argument('--file_path' ,type = str, help = 'file path')
-parser.add_argument('--json_path' ,type = str, help = 'path of feature idx')
+parser.add_argument('--file_path' , default = '../processed_data/train_processed_8c.h5', type = str, help = 'file path')
+parser.add_argument('--json_path' , default = '../processed_data/geohash_8c.json', type = str, help = 'path of feature idx')
 
 #Task parameters
 parser.add_argument('--test_steps', default =5 ,type = int, help = 'number of future steps to predict')
@@ -84,8 +84,7 @@ class Pipeline(object):
 		self.seq_len = seq_len
 		self.batch_size = batch_size
 		self.data_stru = data_stru
-		self.buffer_size = 6000
-
+		self.buffer_size = 8000
 
 	def split_input_target(self, chunk):
 		
@@ -102,29 +101,25 @@ class Pipeline(object):
 		
 		return tuple(input_data), target_text
 
-
 	def data_pipe(self):
 
-		examples_per_epoch_toy = len(self.data)//self.seq_len
-
+		examples_per_epoch = len(self.data)//self.seq_len
+		print ('examples_per_epoch', examples_per_epoch)
 		# Create training examples / targets
-		char_dataset_toy = tf.data.Dataset.from_tensor_slices(self.data)
-		char_dataset_toy = char_dataset_toy.window(self.seq_len, shift=1, drop_remainder=True)
-		sequences_toy = char_dataset_toy.flat_map(lambda window: window.batch(self.seq_len))
-		examples_per_epoch_toy = len(self.data) - self.seq_len + 1
+		tf_dataset = tf.data.Dataset.from_tensor_slices(self.data)
+		dataset_slide = tf_dataset.window(self.seq_len, shift=1, drop_remainder=True)
+		sequences_slide = dataset_slide.flat_map(lambda window: window.batch(self.seq_len))
+		examples_per_epoch = len(self.data) - self.seq_len + 1
 
+		dataset = sequences_slide.map( self.split_input_target, num_parallel_calls = 4)
 
-		dataset_toy = sequences_toy.map( self.split_input_target, num_parallel_calls = 4)
+		steps_per_epoch = examples_per_epoch//self.batch_size
 
-		steps_per_epoch_toy = examples_per_epoch_toy//self.batch_size
+		dataset = dataset.shuffle(self.buffer_size).batch(self.batch_size, drop_remainder=True)
+		dataset = dataset.repeat()
+		dataset = dataset.prefetch(1)
 
-		dataset_toy = dataset_toy.shuffle(self.buffer_size).batch(self.batch_size, drop_remainder=True)
-		dataset_toy = dataset_toy.repeat()
-		dataset_toy = dataset_toy.prefetch(1)
-
-
-		return dataset_toy, steps_per_epoch_toy
-
+		return dataset, steps_per_epoch
 
 class Predict(object):
 
@@ -221,15 +216,12 @@ class RNN(object):
 		rnn =  tf.keras.layers.CuDNNGRU( self.units,
 			return_sequences=True,
 			recurrent_initializer='glorot_uniform',
-			#batch_input_shape = [self.batch_size, None, self.feature_size],
 			stateful= self.state)(dense0)
 
 		rnn = tf.keras.layers.Dropout(self.drop)(rnn)
 
 		dense1 = tf.keras.layers.Dense(self.dense, activation = None)(rnn)
-		#dense1 = tf.keras.layers.Dense(250, activation = None)(rnn)
 		
-		#model_output = dense1
 		model_output =  tf.keras.layers.Dense(self.feature_size, activation = 'sigmoid')(dense1)
 
 		return model_input, model_output
@@ -254,8 +246,6 @@ def combine_rnn(rnn_units, dense_size, drop_rate, batch_size, state = False):
 		output_list.append(model_output)
 		
 	final_out = tf.keras.layers.concatenate(output_list, axis = -1)
-	#final_out = tf.keras.layers.Dense(1329, activation = 'sigmoid')(final_out)
-	#final_out = output_list[0]
 	model = tf.keras.models.Model(inputs = input_list , outputs = final_out)
 	
 	return model
@@ -264,15 +254,14 @@ def combine_rnn(rnn_units, dense_size, drop_rate, batch_size, state = False):
 def main(toy_train, toy_val, data_stru):
 
 	if args.train:
-		wave_train, steps_per_epoch_train = Pipeline(toy_train, args.len, args.batch_size, data_stru).data_pipe()
-		wave_val, steps_per_epoch_val = Pipeline(toy_val, args.len, args.batch_size, data_stru).data_pipe() 
+		train_data, steps_per_epoch_train = Pipeline(toy_train, args.len, args.batch_size, data_stru).data_pipe()
+		val_data, steps_per_epoch_val = Pipeline(toy_val, args.len, args.batch_size, data_stru).data_pipe() 
 
 		model = combine_rnn(args.rnn, args.dense, args.drop, args.batch_size)
 
 		model.compile(
 		optimizer = tf.train.AdamOptimizer(),
 		loss = rmse)
-		
 		
 		tf.keras.utils.plot_model(model)
 		print (model.summary())
@@ -283,19 +272,19 @@ def main(toy_train, toy_val, data_stru):
 		filepath= args.save_path + args.model_name,
 		save_weights_only=True,
 		monitor = 'val_loss',
-		save_best_only = True 
+		save_best_only = False 
 		)
 
 		tensorboard = tf.keras.callbacks.TensorBoard(log_dir="logs/{}".format(args.model_name))
 
-		history_toy = model.fit(wave_train, epochs= args.epoch, steps_per_epoch=steps_per_epoch_train,
-		validation_data = wave_val, validation_steps = steps_per_epoch_val, 
+		history = model.fit(train_data, epochs= args.epoch, steps_per_epoch=steps_per_epoch_train,
+		validation_data = val_data, validation_steps = steps_per_epoch_val, 
 		callbacks=[checkpoint_callback, tensorboard])
 
-		#history_toy = model.fit(dataset_toy, epochs=EPOCHS, steps_per_epoch=steps_per_epoch_toy, callbacks=[checkpoint_callback, tensorboard])
+		#history = model.fit(dataset, epochs=EPOCHS, steps_per_epoch=steps_per_epoch_train, callbacks=[checkpoint_callback, tensorboard])
 
-		min_train_loss = min(history_toy.history['loss'])
-		min_train_val_loss = min(history_toy.history['val_loss'])
+		min_train_loss = min(history.history['loss'])
+		min_train_val_loss = min(history.history['val_loss'])
 
 		print ('\n train: {}, validation: {}'.format(min_train_loss, min_train_val_loss)) 
 		#print ('\n train: {}'.format(min_train_loss)) 
@@ -307,18 +296,8 @@ def main(toy_train, toy_val, data_stru):
 		model_test = combine_rnn( args.rnn, args.dense, args.drop, batch_size = 1, state = True)
 		model_test.load_weights(args.save_path + args.model_name)
 
-		#model_test = build_model_test(feature_size, embedding_dim_toy, rnn_units_toy, batch_size=1, state = True)
-		#model_test.load_weights(args.save_path + args.model_name)
-		#model_test.build(tf.TensorShape([1, None, feature_size]))
-
-
-		#test_file = toy_train
 		test_data = toy_val
-		#test_data = 'processed_data/test_processed.h5'
-		#test_data = toy_val_un
-		#test_data_raw = toy_val_raw
-
-		#pred_ahead = args.test_steps
+		#test_data = h5py.File('processed_data/test_processed.h5', 'r').get('data')[:]
 
 		if args.test_file:
 			input_lens = [24, 48, 96, 164, 192]
@@ -349,9 +328,8 @@ if __name__ == '__main__':
 
 	hf = h5py.File( args.file_path, 'r')
 	traffic = hf.get('data')[:]
-	toy = traffic
-	toy_train = toy[:int (len(toy) * 0.8)].round(3).astype('float32')
-	toy_val = toy[int (len(toy) * 0.8):].round(3).astype('float32')
+	train = traffic[:int (len(traffic) * 0.95)].round(3).astype('float32')
+	val = traffic[int (len(traffic) * 0.95):].round(3).astype('float32')
 
 
 	#Load the list of features indexes that contain the start and end index of features from each location cluster 
@@ -361,5 +339,5 @@ if __name__ == '__main__':
 	for feature in features_index:
 		data_stru.append(Data_input(feature[0], feature[1]))
 
-	main(toy_train, toy_val, data_stru)
+	main(train, val, data_stru)
 
