@@ -2,7 +2,7 @@
 
 ## Software packages requirements 
 
-The code is written using Python 3.5.2.
+The scripts are written using Python 3.5.2 and tested in the Ubuntu 16.04 environment.
 Please make sure Tensorflow 1.13 with gpu support is being installed.
 
 Alternative, you can use the docker image that I have created for 
@@ -20,6 +20,10 @@ $ nvidia-docker run -it --rm -p 8888:8888 tmxxuan/tf1.13-gpu-py3:traffic bash
 ```
 
 If you do not have docker and nvidia-docker installed, you can refer to this [guide](https://www.tensorflow.org/install/docker) for instructions
+
+## Steps to run the code
+
+There are only two steps involved in evaluating the trained model on the test set.
 
 ## Step 1
 
@@ -98,4 +102,23 @@ $ python main.py --test --model_name best_model --test_sample 0:300 --test_steps
 ```
 will plot the predicted demands at the location that corresponses to column index 200.
 You can change the location by changing the integers in the `features_idx` variable in the `utils.py` script. 
+
+## Training the model
+
+If you want to re-train the model, run
+
+```
+$ python main.py --train --model_name <name of your model> 
+```
+
+This trains a model with default parameters:
+
+- Training epochs: `--epoch 50`
+- Mini batch size: `--batch_size 64`
+- GRU units: `--rnn 150`
+- Dense layers dim: `--dense 150`
+- Length of sequence for training: `--len 193`
+- Dropout rate: `--drop 0.1`
+
+
 
