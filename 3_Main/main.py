@@ -2,7 +2,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import tensorflow as tf
 config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.2
+config.gpu_options.per_process_gpu_memory_fraction = 0.3
 
 import numpy as np
 import pandas as pd
@@ -251,11 +251,11 @@ def combine_rnn(rnn_units, dense_size, drop_rate, batch_size, state = False):
 	return model
 
 
-def main(toy_train, toy_val, data_stru):
+def main(train, val, data_stru):
 
 	if args.train:
-		train_data, steps_per_epoch_train = Pipeline(toy_train, args.len, args.batch_size, data_stru).data_pipe()
-		val_data, steps_per_epoch_val = Pipeline(toy_val, args.len, args.batch_size, data_stru).data_pipe() 
+		train_data, steps_per_epoch_train = Pipeline(train, args.len, args.batch_size, data_stru).data_pipe()
+		val_data, steps_per_epoch_val = Pipeline(val, args.len, args.batch_size, data_stru).data_pipe() 
 
 		model = combine_rnn(args.rnn, args.dense, args.drop, args.batch_size)
 
@@ -263,7 +263,7 @@ def main(toy_train, toy_val, data_stru):
 		optimizer = tf.train.AdamOptimizer(),
 		loss = rmse)
 		
-		tf.keras.utils.plot_model(model)
+		#tf.keras.utils.plot_model(model)
 		print (model.summary())
 
 		tf.keras.backend.set_session(tf.Session(config=config))
@@ -293,9 +293,11 @@ def main(toy_train, toy_val, data_stru):
 		start_time = time.time()
 		model_test = combine_rnn( args.rnn, args.dense, args.drop, batch_size = 1, state = True)
 		model_test.load_weights(args.save_path + args.model_name)
-
+		
+		#test_data = val
 		test_data = h5py.File('../processed_data/test_processed.h5', 'r').get('data')[:]
 		test_data = test_data[int (len(test_data) * 0.8):].round(3).astype('float32')
+		#test_data = test_data.astype('float32')
 
 		if args.test_file:
 			input_lens = [24, 48, 96, 164, 192]
@@ -319,7 +321,6 @@ def main(toy_train, toy_val, data_stru):
 
 		if args.plot_sample:
 			plot_test(input_seq, all_targets, all_predictions, args.model_name)
-			print ('\n fig saved')
 
 
 if __name__ == '__main__':

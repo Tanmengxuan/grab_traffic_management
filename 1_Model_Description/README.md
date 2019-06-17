@@ -39,7 +39,7 @@ The 8 ARNN models are being trained simultaneously and the outputs from all 8 mo
 Therefore, the final model is still able to predict the travel demands at all 1329 locations at the same time. 
 
 The multiple ARNN structure is also the **final architecture** of the model that will be used for training and evalutation for this challenge.
-The detailed structure of this model visualized using Keras can be found [here](link).
+The detailed structure of this model visualized using Keras can be found [here](https://github.com/Tanmengxuan/grab_traffic_management/blob/master/1_Model_Description/model.png).
 
 ## Some results
 
@@ -48,7 +48,7 @@ predict up to any number of time intervals ahead given input sequence of any len
 
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/locations_1.png" alt="one" width="600px" height="300px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/locations_1.png" alt="one" width="800px" height="350px" style="display: block;">
 </div>
 
 
@@ -56,7 +56,7 @@ The model is able to capture the demand pattern of a particular location 100 tim
 
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/locations_2.png" alt="two" width="600px" height="300px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/locations_2.png" alt="two" width="800px" height="350px" style="display: block;">
 </div>
 
 
