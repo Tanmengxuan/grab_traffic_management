@@ -1,7 +1,25 @@
 # 3 - Running the code 
 
-## Description
+## Software packages requirements 
 
+The code is written using Python 3.5.2.
+Please make sure Tensorflow 1.13 with gpu support is being installed.
+
+Alternative, you can use the docker image that I have created for 
+this project, it contains all the necessary supporting packages.
+You only need to install CUDA version 10. 
+
+To use the docker image, run
+```
+$ docker pull tmxxuan/tf1.13-gpu-py3:traffic
+```
+
+Next, run the image using nvidia docker:
+```
+$ nvidia-docker run -it --rm -p 8888:8888 tmxxuan/tf1.13-gpu-py3:traffic bash 
+```
+
+If you do not have docker and nvidia-docker installed, you can refer to this [guide](https://www.tensorflow.org/install/docker) for instructions
 
 ## Step 1
 
@@ -13,7 +31,6 @@ $ python process.py --input_raw <file path of test set>
 ```
 This command will preprocess the raw test set and will be saved as
 `test_processed.h5` in the `../processed_data/` folder.
-
 
 
 ## Step 2
@@ -51,7 +68,7 @@ def main(toy_train, toy_val, data_stru):
 ```
 
 The integer value in the list specifies the length of the input sequences that will be given to the model as input data.
-For instance, in the case of the first integer :24 in the list, 
+For instance, in the case of the first integer 24 in the list, 
 the model will do the following 3 steps: 
 1. Take in the preprocessed samples from row index 0 to 23 and predict the values that ranges from row index 24 to 28.
 2. The model will reset its cell states. 

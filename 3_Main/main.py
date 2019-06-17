@@ -9,7 +9,6 @@ import pandas as pd
 import os
 import time
 import argparse
-#import matplotlib.pyplot as plt
 import pdb
 import h5py
 import time
@@ -228,12 +227,19 @@ class RNN(object):
 
 
 def rmse(y_true, y_pred):
+	
+	'''
+	root mean squared loss function used to train model
+	'''
 
 	return tf.math.sqrt(tf.losses.mean_squared_error(y_true, y_pred))
 
 
 def combine_rnn(rnn_units, dense_size, drop_rate, batch_size, state = False):
 	
+	'''
+	a function used to initialize the multiple rnns and combines them at the end
+	'''
 	input_list = []
 	output_list = []
 	
@@ -285,8 +291,6 @@ def main(train, val, data_stru):
 		min_train_val_loss = min(history.history['val_loss'])
 
 		print ('\n train: {}, validation: {}'.format(min_train_loss, min_train_val_loss)) 
-		#print ('\n train: {}'.format(min_train_loss)) 
-
 
 	if args.test:
 
@@ -294,10 +298,8 @@ def main(train, val, data_stru):
 		model_test = combine_rnn( args.rnn, args.dense, args.drop, batch_size = 1, state = True)
 		model_test.load_weights(args.save_path + args.model_name)
 		
-		#test_data = val
 		test_data = h5py.File('../processed_data/test_processed.h5', 'r').get('data')[:]
-		test_data = test_data[int (len(test_data) * 0.8):].round(3).astype('float32')
-		#test_data = test_data.astype('float32')
+		test_data = test_data.astype('float32')
 
 		if args.test_file:
 			input_lens = [24, 48, 96, 164, 192]
