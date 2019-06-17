@@ -29,7 +29,7 @@ The model makes use of history demand information to predict future demand at ev
 The model is able to predict the future demand of any time length given a sequence of input of arbitrary length T.  
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/locations_1.png" alt="one" width="600px" height="300px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/locations_1.png" alt="one" width="700px" height="400px" style="display: block;">
 </div>
 
 
