@@ -68,7 +68,7 @@ class Process(object):
 if __name__ == '__main__':
 
 	raw_data = pd.read_csv(args.input_raw, sep = ',')
-	fp = json.loads((open('geohash_8c.json','r')).read())
+	fp = json.loads((open('../processed_data/geohash_8c.json','r')).read())
 	geohash_dict = fp['coord_dict']
 
 	processed_data_array = Process(raw_data, geohash_dict).get_processed_data()

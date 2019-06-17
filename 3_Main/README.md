@@ -18,10 +18,13 @@ This command will preprocess the raw test set and will be saved as
 
 ## Step 2
 
+
+## Evaluating the trained model 
+
 ### Test on the entire preprocessed test dataset
 
-After `test_processed.h5' has been saved, we can evaluate the model (named as 'best_model') that
-has been trained and saved in `checkpoints/` folder.
+After `test_processed.h5` has been saved, we can evaluate the model (named as 'best_model') that
+has been trained and saved in the `checkpoints/` folder.
 
 Run
 ```
