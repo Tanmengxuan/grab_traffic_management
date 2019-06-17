@@ -36,6 +36,9 @@ algorithm makes use of relative distance between locations to form different clu
 <img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/blob/master/2_Data_Analysis/images/clusters.png" alt="location clusters" width="500px" height="500px" style="display: block;">
 </div>
 
+<div>
+<img src="https://raw.githubusercontent.com/greentfrapp/attention-primer/master/1_counting-letters/images/attention.png" alt="attention heatmap" width="400px" height="whatever" style="display: block;">
+</div>
 
 8 clusters have been identified. Next, the columns of the preprocessed data are being arranged such that locations that have the same cluster label are grouped together.
 
