@@ -22,10 +22,10 @@ to predict D_{t+1}. C_t is an encoded representation of the demand pattern the m
 
 ## Making use of location clusters information
 
-Although it is possible to use a single ARNN to model the travel pattern of users at all of the 1329 locations, we want make use of the geohash information given in the raw dataset and use multiple ARNN to capture
+Although it is possible to use a single ARNN to model the travel pattern of users at all 1329 locations, we want make use of the geohash information given in the raw dataset and use multiple ARNN to capture
 travel patterns at different location clusters.
 
-How do we identify the clusters given the geohash information is explained in the [data preprocessing section](https://github.com/Tanmengxuan/grab_traffic_management/tree/master/2_Data_Analysis).
+How do we identify the clusters with the geohash information is explained in the [data preprocessing section](https://github.com/Tanmengxuan/grab_traffic_management/tree/master/2_Data_Analysis).
 
 In short, 8 clusters of locations have been identified and a total of 8 ARNN models are used to model the travel patterns of locations in their corresponding clusters. Each ARNN will be tasked to learn the travel patterns of locations which belong to a certain cluster. 
 

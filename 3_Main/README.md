@@ -70,7 +70,8 @@ def main(train, val, data_stru):
 		input_lens = [24, 48, 96, 164, 192]
 ```
 
-Each integer value in `input_lens` represents a value of T. The length of `input_lens` will determine how many times the model will iterate through the entire preprocessed test data.
+Each integer value in `input_lens` represents a value of T. 
+The number of values in `input_lens` will determine how many times the model will iterate through the entire preprocessed test data.
 
 Doing so will create sufficient test samples of different lengths T to evaluate the trained model.
 
@@ -87,36 +88,38 @@ for T in input_lens:
 	num_samples.append( len(test_data) // ( input_len + test_steps))	
 
 # start of evaluation
-For T in input_lens:
+for T in input_lens:
 	start_index = 0
-	end_index = start_index + end_index
+	end_index = start_index + T 
 
-	For samples in range(num_samples[idx]): 
-		model.reset_states() # so that the model will treat each test example as the first time it is seeing it 
+	for samples in range(num_samples[idx]): 
+
+		#  reset the cell states of the RNN so that the model will treat each test example as the first time it is seeing it 
+		model.reset_states() 
 		input_sequence = test_data[start_index: end_index]
 		
 		start_index = end_index + test_steps
 		end_idx = start_index + T
 
-		For step in range(test_steps):
+		for step in range(test_steps):
 			predcition = model.predict(input_sequence)			
 			input_sequence = predcition
 
-		End For when model has output T+5 predcitions
+		End for when model has output T+5 predcitions
 
-	End For when all possible test examples are evaluated
+	End for when all possible test examples are evaluated
 
-End For when all test cases of T have been evaluated
+End for when all test cases of T have been evaluated
 
 ```
 
-The actual code is located in `def prediction(self)` under the `Predict` class in `main.py`
+The actual code can be found in the `prediction` method under the `Predict` class in `main.py`
 
 Below is a simplied explanation of the psuedo code:
 
 ```
 
-	For instance, in the case of the first T = 24 in the list, 
+	For instance, for the first value (T = 24) in the list, 
 	the model will do the following 3 steps: 
 
 	1. Take in the preprocessed samples from row index 0 to 23 and predict the values in row index 24 to 28.
