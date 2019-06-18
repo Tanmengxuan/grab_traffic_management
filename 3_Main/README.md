@@ -100,7 +100,7 @@ For T in input_lens:
 
 		For step in range(test_steps):
 			predcition = model.predict(input_sequence)			
-			test_input_data = predcition
+			input_sequence = predcition
 
 		End For when model has output T+5 predcitions
 
