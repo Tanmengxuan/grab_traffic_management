@@ -27,7 +27,7 @@ travel patterns at different location clusters.
 
 How do we identify the clusters given the geohash information is explained in the [data preprocessing section](https://github.com/Tanmengxuan/grab_traffic_management/tree/master/2_Data_Analysis).
 
-In short, 8 different clusters of locations have been identified and a total of 8 ARNN models are used to model the travel patterns at their corresponding clusters. Each ARNN will be tasked to learn the travel patterns of locations which belong to a certain cluster. 
+In short, 8 clusters of locations have been identified and a total of 8 ARNN models are used to model the travel patterns of locations in their corresponding clusters. Each ARNN will be tasked to learn the travel patterns of locations which belong to a certain cluster. 
 
 
 <div>
@@ -35,10 +35,10 @@ In short, 8 different clusters of locations have been identified and a total of 
 </div>
 
 
-The 8 ARNN models are being trained simultaneously and the outputs from all 8 models are being merged at the final layer and subsequently backpropagated using the root mean square loss function. 
+The 8 ARNN models are being trained simultaneously and the outputs from all 8 models are being merged at the final layer and subsequently backpropagated using the root mean squared error (RMSE) loss function. 
 Therefore, the final model is still able to predict the travel demands at all 1329 locations at the same time. 
 
-The multiple ARNN structure is also the **final architecture** of the model that will be used for training and evalutation for this challenge.
+The multiple ARNN structure is also the **final architecture** of the model that will be used for training and evaluation for this challenge.
 The detailed structure of this model visualized using Keras can be found [here](https://github.com/Tanmengxuan/grab_traffic_management/blob/master/1_Model_Description/model.png).
 
 ## Some results
@@ -52,7 +52,7 @@ predict up to any number of time intervals ahead given input sequence of any len
 </div>
 
 
-The model is able to capture the demand pattern of a particular location 100 time intervals ahead given an input sequence length of 300 time intervals. 
+For example, the model is able to capture the demand pattern of a particular location 100 time intervals ahead given an input sequence length of 300 time intervals. 
 
 
 <div>
@@ -61,4 +61,10 @@ The model is able to capture the demand pattern of a particular location 100 tim
 
 
 It is also able to capture demand patterns at multiple locations simultaneously.
+
+### RMSE score
+
+While choosing the hyperparameters for the model, 20% (roughly 12 days) of the training data was used as the validation set.
+The best model is able to give a RMSE score of `0.03` on the validation set by taking in sequence data of various lengths T and giving a output predictions of T+5 time intervals. 
+
 

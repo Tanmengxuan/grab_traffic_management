@@ -32,8 +32,8 @@ the prepocessed training data is 5856. The final shape of the prepocessed traini
 
 ## 2_Column order in prepocessed data
 
-We first decode all unique geohashes into their respective latitude and longitude values. Then, possible clusters in the spread of locations are identified using the KMeans clustering algorithm. 
-The algorithm makes use of relative distance between locations to form different clusters.
+We first decode all unique geohashes into their respective latitude and longitude values. Then, possible clusters of locations are identified using the KMeans clustering algorithm. 
+The algorithm makes use of relative distances between locations to form different clusters.
 
 
 <div>
@@ -41,7 +41,7 @@ The algorithm makes use of relative distance between locations to form different
 </div>
 
 
-8 clusters have been identified. Next, the columns of the preprocessed data are being arranged such that locations that have the same cluster label are grouped together.
+8 clusters have been identified. Next, the columns of the preprocessed data are being arranged such that locations with the same cluster label are grouped together.
 
 
 <div>
@@ -49,8 +49,8 @@ The algorithm makes use of relative distance between locations to form different
 </div>
 
 
-The arrangement of the columns in the preprocessed data has been saved and will be used for training 
-and evaluation of the multiple ARNN model where each ARNN will be assigned to model travel demands in different clusters.
+The arrangement of the columns in the preprocessed data has been saved in `geohash_8c.json` in the `../processed_data` folder and will be used for training 
+and evaluation of the multiple ARNN model where each ARNN will be assigned to model and predict travel demands in different clusters.
 
 ## Travel demand patterns 
 

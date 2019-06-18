@@ -278,7 +278,7 @@ def main(train, val, data_stru):
 		filepath= args.save_path + args.model_name,
 		save_weights_only=True,
 		monitor = 'val_loss',
-		save_best_only = False 
+		save_best_only = True 
 		)
 
 		tensorboard = tf.keras.callbacks.TensorBoard(log_dir="logs/{}".format(args.model_name))
