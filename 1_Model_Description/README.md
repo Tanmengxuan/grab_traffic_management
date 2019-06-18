@@ -65,6 +65,6 @@ It is also able to capture demand patterns at multiple locations simultaneously.
 ### RMSE score
 
 While choosing the hyperparameters for the model, 20% (roughly 12 days) of the training data was used as the validation set.
-The best model is able to give a RMSE score of `0.03` on the validation set by taking in sequence data of various lengths T and giving a output predictions of T+5 time intervals. 
+The best model is able to give a RMSE score of `0.03` on the validation set by taking in sequence data of various lengths T and giving output predictions of T+5 time intervals. 
 
 

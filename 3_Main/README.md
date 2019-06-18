@@ -52,8 +52,6 @@ Run
 $ python main.py --test --model_name best_model --test_file
 ```
 
-This test the model with 
-
 The `--test_file` flag will test the entire preprocessed test dataset by taking in inputs of various lengths T
 and outputting predictions that are 5 time intervals ahead. 
 The predicted values will be stored and evaluated with the true values using the the root mean squared error (RMSE) function,
