@@ -36,7 +36,7 @@ The algorithm makes use of relative distances between locations to form differen
 
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/clusters.png" alt="location clusters" width="600px" height="400px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/clusters.png" alt="location clusters" width="500px" height="400px" style="display: block;">
 </div>
 
 8 clusters have been identified. Next, the columns of the preprocessed data are being arranged such that locations with the same cluster label are grouped together.
