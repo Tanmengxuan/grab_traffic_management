@@ -1,6 +1,7 @@
 # grab_traffic_management
 
-An attempt to tackle the Traffic Management problem as part of the [Grab AI for S.E.A. challenge](https://www.aiforsea.com/traffic-management).
+An attempt to tackle the [Traffic Management](https://www.aiforsea.com/traffic-management) 
+problem as part of the [Grab AI for S.E.A. challenge](https://www.aiforsea.com/).
 
 Thank you for visiting this repo. Any feedback is appreciated! 
 
@@ -14,21 +15,21 @@ Thank you for visiting this repo. Any feedback is appreciated!
 
 ## Brief overview of proposed solution
 
-We proposed to use a Recurrent Neural Network (RNN) with autoregressive property to model the travel 
-demand patterns of users at different locations across time.
+We proposed to use a Recurrent Neural Network (RNN) with autoregressive property to model the spatio-temporal travel 
+demand patterns of users.
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/arnn.png" alt="arnn" width="550px" height="300px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/arnn.png" alt="arnn" width="550px" height="300px" style="display: block;">
 </div>
 
+![model_architecture](images/arnn.png)
 
 The model makes use of history demand information to predict future demand at every timestep.
-
 
 The model is able to predict the future demand of any time length given a sequence of input of arbitrary length T.  
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/locations_1.png" alt="one" width="800px" height="400px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/locations_1.png" alt="one" width="800px" height="400px" style="display: block;">
 </div>
 
 
