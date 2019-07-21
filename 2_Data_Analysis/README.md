@@ -23,9 +23,8 @@ the second row contains demands from the same 1329 locations at day 1 time 0:15 
 
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/row_order.png" alt="row order" width="550px" height="450px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/row_order.png" alt="row order" width="550px" height="400px" style="display: block;">
 </div>
-![row_order](../images/row_order.png)
 
 Since the training data contains 61 days of the data at 15 minutes intervals, the total number of rows in
 the prepocessed training data is 5856. The final shape of the prepocessed training data is (5856, 1329). 
@@ -37,9 +36,8 @@ The algorithm makes use of relative distances between locations to form differen
 
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/clusters.png" alt="location clusters" width="550px" height="400px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/clusters.png" alt="location clusters" width="600px" height="400px" style="display: block;">
 </div>
-![clusters](../images/clusters.png)
 
 8 clusters have been identified. Next, the columns of the preprocessed data are being arranged such that locations with the same cluster label are grouped together.
 
@@ -61,6 +59,5 @@ different ARNN models to capture patterns in different clusters may help in the 
 <div>
 <img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/pattern_clusters.png" alt="clusters demands" width="650px" height="450px" style="display: block;">
 </div>
-
 
 We randomly picked 2 locations from 4 different clusters for display.

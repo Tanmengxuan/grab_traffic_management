@@ -27,10 +27,8 @@ The model makes use of history demand information to predict future demand at ev
 The model is able to predict the future demand of any time length given a sequence of input of arbitrary length T.  
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/locations_1.png" alt="one" width="800px" height="400px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/locations_1.png" alt="one" width="800px" height="350px" style="display: block;">
 </div>
-
-![model_result](images/locations_1.png)
 
 The plot displays that model's ability to capture the demand pattern of users at location 'qp09eq' 100 time intervals ahead
 when given a input sequence of length 300.
