@@ -5,14 +5,15 @@
 The task requires the model to predict as accurate as possible the travel demand at all 
 locations (1329 in total) up T+5 time intervals given a sequence of demand data for all locations of arbitrary length T.
 
-This is similar to a [language generation problem](https://www.tensorflow.org/tutorials/sequences/text_generation) where the objective is to model the conditional probability of generating new words when given a sequence of length T words as input. The only difference is that 
+This is similar to a [text generation problem](https://www.tensorflow.org/tutorials/sequences/text_generation) where the objective is to model the conditional probability of generating new words when given a sequence of length T words as input. The only difference is that 
 the travel demand generation model directly predicts the demand at the next time interval while the language generation model has to sample from a probability distribution to decide on the next probable target.
 
-Therefore an Autoregressive Recurrent Neural Network (ARNN) may be used to model the travel demand problem whose aim is to model the future travel pattern given the history tavel demands of users. 
-
+Therefore an Autoregressive Recurrent Neural Network (ARNN) may be used to model the travel demand problem which aims to capture the future travel pattern given the history tavel demands of users. 
+The RNN cell can be trained to model temporal correlations between the demands of users across time while the dense layer that shares weights across timesteps 
+may be used to learn spatio relationships of users demands between different locations. 
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/arnn.png" alt="arnn" width="550px" height="300px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/arnn.png" alt="arnn" width="550px" height="300px" style="display: block;">
 </div>
 
 
@@ -31,7 +32,7 @@ In short, 8 clusters of locations have been identified and a total of 8 ARNN mod
 
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/arnn_multiple.png" alt="arnn_multiple" width="550px" height="350px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/arnn_multiple.png" alt="arnn_multiple" width="550px" height="350px" style="display: block;">
 </div>
 
 
@@ -48,7 +49,7 @@ predict up to any number of time intervals ahead given input sequence of any len
 
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/locations_1.png" alt="one" width="800px" height="350px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/locations_1.png" alt="one" width="800px" height="350px" style="display: block;">
 </div>
 
 
@@ -56,7 +57,7 @@ For example, the model is able to capture the demand pattern of a particular loc
 
 
 <div>
-<img src="https://raw.githubusercontent.com/Tanmengxuan/cicids2017/master/images/locations_2.png" alt="two" width="800px" height="350px" style="display: block;">
+<img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/locations_2.png" alt="two" width="800px" height="350px" style="display: block;">
 </div>
 
 

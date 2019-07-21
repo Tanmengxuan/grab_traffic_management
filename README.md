@@ -22,8 +22,6 @@ demand patterns of users.
 <img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/arnn.png" alt="arnn" width="550px" height="300px" style="display: block;">
 </div>
 
-![model_architecture](images/arnn.png)
-
 The model makes use of history demand information to predict future demand at every timestep.
 
 The model is able to predict the future demand of any time length given a sequence of input of arbitrary length T.  
@@ -32,6 +30,7 @@ The model is able to predict the future demand of any time length given a sequen
 <img src="https://raw.githubusercontent.com/Tanmengxuan/grab_traffic_management/master/images/locations_1.png" alt="one" width="800px" height="400px" style="display: block;">
 </div>
 
+![model_result](images/locations_1.png.png)
 
 The plot displays that model's ability to capture the demand pattern of users at location 'qp09eq' 100 time intervals ahead
 when given a input sequence of length 300.
