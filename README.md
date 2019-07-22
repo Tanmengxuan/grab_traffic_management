@@ -3,9 +3,10 @@
 An attempt to tackle the [Traffic Management](https://www.aiforsea.com/traffic-management) 
 problem as part of the [Grab AI for S.E.A. challenge](https://www.aiforsea.com/).
 
-*The attempt has been selected as **Top 50 Finalist** solution*
-
 Thank you for visiting this repo. Any feedback is appreciated! 
+
+*The attempt has been selected as **Top 50 Finalist** solution.*
+
 
 
 **Content**
